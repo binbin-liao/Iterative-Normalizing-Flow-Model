@@ -6,3 +6,5 @@
 - Scipy >=1.11.4
 - argparse >= 1.1
 - matplotlib >= 3.8.0
+- minos  1.0.2
+ 
