@@ -5,6 +5,7 @@ import time
 import seaborn as sns
 from tools import *
 import importlib
+import os
 
 import tools
 importlib.reload(tools)
@@ -14,8 +15,7 @@ d_model = np.loadtxt('./data/d_model.txt')
 ref_model = np.loadtxt('./data/ref_model.txt')
 
 
-#mineos_path ='../../../mineos_var_cig'
-mineos_path = '/home/benjamin/mineos_var_cig/DEMO/Earth_v6'
+mineos_path = os.getcwd()+'/Mineos/DEMO/Earth'
 
 # PREM model
 rad = []
@@ -234,7 +234,7 @@ def Sample(step=1,doc_num=5):
             #vsv_fin[vs_index,1] = ert_para[temp,103:112]
             #vph_fin[ot_index,1] = ert_para[temp,112:122]
             #vsh_fin[vs_index,1] = ert_para[temp,122:131]
-            model_name = mineos_path+'/Earth_model_s{0}_{1}/Earth_{2}.txt'.format(step,num,temp)
+            model_name = mineos_path+'/Earth_model_step{0}_{1}/Earth_{2}.txt'.format(step,num,temp)
             model_format(rad_fin.reshape([NN]),den_fin,vpv_fin,vsv_fin,qk_fin,qm_fin,vph_fin,vsh_fin,eta_fin,model_name)
 
 def Sample_test(step=1,doc_num=1,Sample_N=200):
@@ -281,7 +281,7 @@ def Sample_test(step=1,doc_num=1,Sample_N=200):
             #vsv_fin[vs_index,1] = ert_para[temp,103:112]
             #vph_fin[ot_index,1] = ert_para[temp,112:122]
             #vsh_fin[vs_index,1] = ert_para[temp,122:131]
-            model_name = mineos_path+'/Earth_model_s{0}_{1}_test/Earth_{2}.txt'.format(step,num,temp)
+            model_name = mineos_path+'/Earth_model_step{0}_{1}_test/Earth_{2}.txt'.format(step,num,temp)
             model_format(rad_fin.reshape([NN]),den_fin,vpv_fin,vsv_fin,qk_fin,qm_fin,vph_fin,vsh_fin,eta_fin,model_name)
 
 #Obtain the identification numbers of the normal modes
@@ -363,15 +363,14 @@ add_freq_indx_T(2,[3,5,7,8,13,14,15,16])
 add_freq_indx_T(3,[1,7,16])
 add_freq_indx_T(4,9)
 
-def Read_file(step=1,doc_num=5):
-    model_num = 10000
+def Read_file(step=1,doc_num=5,model_num=10000):
     mode_S_num = 544
     mode_T_num = 119
     elected_num = [[] for i in range(doc_num+1)]
     for file_indx in range(1,doc_num+1):
         for i in range(model_num):
-            filename_S = mineos_path+'/Normal_mode_s{0}_'.format(step)+str(file_indx)+'/Earth_'+str(i)+'_S'
-            filename_T = mineos_path+'/Normal_mode_t{0}_'.format(step)+str(file_indx)+'/Earth_'+str(i)+'_T'
+            filename_S = mineos_path+'/Normal_mode_step{0}_sph_'.format(step)+str(file_indx)+'/Earth_'+str(i)+'_S'
+            filename_T = mineos_path+'/Normal_mode_step{0}_tor_'.format(step)+str(file_indx)+'/Earth_'+str(i)+'_T'
             a = np.genfromtxt(filename_S)
             b = np.genfromtxt(filename_T)
             if a.shape[0] == mode_S_num and b.shape[0] == mode_T_num:
@@ -393,8 +392,8 @@ def Read_file(step=1,doc_num=5):
     j = 0
     for file_indx in range(1,doc_num+1):
         for i in elected_num[file_indx]:
-            filename_S = mineos_path+'/Normal_mode_s{0}_'.format(step)+str(file_indx)+'/Earth_'+str(i)+'_S'
-            filename_T = mineos_path+'/Normal_mode_t{0}_'.format(step)+str(file_indx)+'/Earth_'+str(i)+'_T'
+            filename_S = mineos_path+'/Normal_mode_step{0}_sph_'.format(step)+str(file_indx)+'/Earth_'+str(i)+'_S'
+            filename_T = mineos_path+'/Normal_mode_step{0}_tor_'.format(step)+str(file_indx)+'/Earth_'+str(i)+'_T'
             a = np.genfromtxt(filename_S)
             b = np.genfromtxt(filename_T)
             freq_S[j] = a[:,4]*1000.
@@ -421,8 +420,8 @@ def Read_file_test(step=1,doc_num=1,model_num=100):
     elected_num = [[] for i in range(doc_num+1)]
     for file_indx in range(1,doc_num+1):
         for i in range(model_num):
-            filename_S = mineos_path+'/Normal_mode_s{0}_'.format(step)+str(file_indx)+'_test/Earth_'+str(i)+'_S'
-            filename_T = mineos_path+'/Normal_mode_t{0}_'.format(step)+str(file_indx)+'_test/Earth_'+str(i)+'_T'
+            filename_S = mineos_path+'/Normal_mode_step{0}_sph_'.format(step)+str(file_indx)+'_test/Earth_'+str(i)+'_S'
+            filename_T = mineos_path+'/Normal_mode_step{0}_tor_'.format(step)+str(file_indx)+'_test/Earth_'+str(i)+'_T'
             a = np.genfromtxt(filename_S)
             b = np.genfromtxt(filename_T)
             if a.shape[0] == mode_S_num and b.shape[0] == mode_T_num:
@@ -444,8 +443,8 @@ def Read_file_test(step=1,doc_num=1,model_num=100):
     j = 0
     for file_indx in range(1,doc_num+1):
         for i in elected_num[file_indx]:
-            filename_S = mineos_path+'/Normal_mode_s{0}_'.format(step)+str(file_indx)+'_test/Earth_'+str(i)+'_S'
-            filename_T = mineos_path+'/Normal_mode_t{0}_'.format(step)+str(file_indx)+'_test/Earth_'+str(i)+'_T'
+            filename_S = mineos_path+'/Normal_mode_step{0}_sph_'.format(step)+str(file_indx)+'_test/Earth_'+str(i)+'_S'
+            filename_T = mineos_path+'/Normal_mode_step{0}_tor_'.format(step)+str(file_indx)+'_test/Earth_'+str(i)+'_T'
             a = np.genfromtxt(filename_S)
             b = np.genfromtxt(filename_T)
             freq_S[j] = a[:,4]*1000.

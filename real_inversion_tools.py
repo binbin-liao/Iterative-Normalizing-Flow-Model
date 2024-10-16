@@ -332,7 +332,7 @@ def train_inverse_flow_original1(Obs_Normal_Flow,Inverse_flow,opt_inv,train_data
     test_loss_history = []
     #loss2_history = []
     Obs_Normal_Flow.eval();
-    err_dist = torch.distributions.MultivariateCalculate the special weighting factor ww.Normal(torch.zeros(INPUT_SIZE,dtype=torch.float32),
+    err_dist = torch.distributions.Multivariate.Normal(torch.zeros(INPUT_SIZE,dtype=torch.float32),
                                                                     torch.diag(torch.from_numpy(np.power(var_np,2))).
                                                                     type(torch.float32))
     for it in tqdm(range(epochs)):
