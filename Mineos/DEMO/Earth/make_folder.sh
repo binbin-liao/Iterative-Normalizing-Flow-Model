@@ -8,10 +8,10 @@ if [ -z "$1" ]; then
 fi
 
 n=$1
+num=$2
 
 #change '10' if you want to change the num of folders
-for i in {1..10}
-do
+for ((i=1;i<=num;i++)); do
   folder_name1="./Earth_model_step${n}_${i}"
   folder_name2="./Normal_mode_step${n}_sph_${i}"
   folder_name3="./Normal_mode_step${n}_tor_${i}"

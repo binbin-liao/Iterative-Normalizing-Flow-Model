@@ -4,7 +4,10 @@ n=$1
 i=$2
 
 #============ get the file name =========== 
-export PATH=$HOME/cig/bin:$PATH
+current_dir=$(pwd)
+cigpath=$(dirname "$(dirname "$current_dir")")
+
+export PATH=${cigpath}/cig/bin:$PATH
 modelpath="$(pwd)/Earth_model_step${n}_${i}" 
 for file_a in ${modelpath}/*
 do 
